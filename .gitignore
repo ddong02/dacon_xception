@@ -1,10 +1,9 @@
-<<<<<<< HEAD
 .DS_Store
 .python-version
 data/sample_submission.csv
 data/test.csv
 data/
-=======
-data/
 script/test.py
->>>>>>> master
+output/*
+!output/
+!output/best_model.pth
