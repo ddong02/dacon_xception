@@ -10,3 +10,4 @@ output/*
 origin_script.py
 test.py
 temp/
+script/__pycache__/
