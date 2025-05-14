@@ -14,7 +14,7 @@ class Config:
     batch_size = 64
 
     # 학습 설정
-    n_epochs = 15
+    n_epochs = 1
     learning_rate = 1e-4
     num_classes = 7
     model_name = 'xception'  # 또는 'xception' (timm 필요)

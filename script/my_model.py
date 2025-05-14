@@ -26,7 +26,7 @@ def get_model(model_name='convnext_base', num_classes=7, pretrained=True):
         model.classifier[1] = nn.Linear(in_features, num_classes)
 
     elif model_name == 'xception':
-        model = timm.create_model('xception', pretrained=pretrained, num_classes=num_classes)
+        model = timm.create_model('legacy_xception', pretrained=pretrained, num_classes=num_classes)
 
     else:
         raise ValueError(f"Model '{model_name}' is not supported.")
