@@ -7,3 +7,6 @@ script/test.py
 output/*
 !output/
 !output/best_model.pth
+origin_script.py
+test.py
+temp/

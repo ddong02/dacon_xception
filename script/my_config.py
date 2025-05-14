@@ -3,9 +3,9 @@ from albumentations import Compose, HorizontalFlip, ShiftScaleRotate, Blur, Coar
 
 class Config:
     # 데이터 경로
-    train_dir = './data/train'
-    test_dir = './data/test'
-    test_csv_path = './data/test.csv'
+    train_dir = '../data/train'
+    test_dir = '../data/test'
+    test_csv_path = '../data/test.csv'
 
     # 데이터 설정
     test_size = 0.25
@@ -17,10 +17,10 @@ class Config:
     n_epochs = 15
     learning_rate = 1e-4
     num_classes = 7
-    model_name = 'convnext_base'  # 또는 'xception' (timm 필요)
+    model_name = 'xception'  # 또는 'xception' (timm 필요)
 
     # 파일 저장
-    model_save_path = './checkpoints/best_model.pth'
+    model_save_path = '../output/best_model.pth'
 
     # Augmentation 설정
     train_augmentor = Compose([
@@ -36,4 +36,4 @@ class Config:
 
     val_augmentor = None  # 검증 augmentation 없음
 
-config = Config()
+config = Config() # 다른 파일에서 쉽게 쓰려고 미리 인스턴스 생성

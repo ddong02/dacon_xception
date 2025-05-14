@@ -42,7 +42,11 @@ def main():
         val_loss, val_acc = validate(model, val_loader, criterion, device)
         print(f"Val   Loss: {val_loss:.4f} | Val   Acc: {val_acc:.4f}")
 
-        # 모델 저장
+        # 각 에폭마다 모델 저장
+        epoch_save_path = f"../output/model_epoch{epoch+1:02d}.pth"
+        save_checkpoint(model, epoch_save_path)
+
+        # 최고 성능 모델 저장
         if val_acc > best_val_acc:
             best_val_acc = val_acc
             save_checkpoint(model, config.model_save_path)
