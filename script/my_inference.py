@@ -2,6 +2,11 @@ import torch
 from tqdm import tqdm
 
 def inference(model, test_loader, device, label_encoder=None):
+
+    print('\n')
+    print('-'*30)
+    print('inference starts ...\n')
+
     model = model.to(device)
     model.eval()
     preds = []
@@ -15,5 +20,7 @@ def inference(model, test_loader, device, label_encoder=None):
 
     if label_encoder:
         preds = label_encoder.inverse_transform(preds)
+
+    print("✅ inference finished → baseline_submit.csv")
 
     return preds

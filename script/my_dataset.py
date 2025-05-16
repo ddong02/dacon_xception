@@ -31,11 +31,7 @@ def load_dataframe(train_dir, test_dir, test_csv, test_size=0.25, shuffle=True):
 
     # 테스트 데이터
     test_df = pd.read_csv(test_csv)
-    test_image_paths = []
-    for root, _, files in os.walk(test_dir):
-        for file in sorted(files):  # 정렬 필요
-            test_image_paths.append(os.path.join(root, file))
-    test_df['img_path'] = test_image_paths
+    test_df['img_path'] = test_df['ID'].apply(lambda x: os.path.join(test_dir, f"{x}.jpg"))
 
     # train/val split
     train_df, val_df = train_test_split(train_df, test_size=test_size, stratify=train_df['label_idx'], shuffle=shuffle)
@@ -58,13 +54,9 @@ class StoneDataset(Dataset):
         img_path = row['img_path']
         image = cv2.imread(img_path)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image = cv2.resize(image, self.image_size)
 
         if self.transform:
             image = self.transform(image=image)['image']
-
-        image = image.astype(np.float32) / 255.0
-        image = np.transpose(image, (2, 0, 1))  # HWC → CHW
 
         if self.is_test:
             return image

@@ -1,5 +1,11 @@
 # config.py
-from albumentations import Compose, HorizontalFlip, ShiftScaleRotate, Blur, CoarseDropout, RandomRain, CLAHE, ColorJitter, RandomBrightnessContrast, OneOf
+import cv2
+from albumentations import (
+    Compose, HorizontalFlip, ShiftScaleRotate, Blur, CoarseDropout, 
+    RandomRain, CLAHE, ColorJitter, RandomBrightnessContrast, OneOf,
+    PadIfNeeded, Resize, Normalize
+)
+from albumentations.pytorch.transforms import ToTensorV2
 
 class Config:
     # 데이터 경로
@@ -31,9 +37,23 @@ class Config:
         OneOf([
             ColorJitter(0.2, 0.2, 0.2, 0.2, p=1.0),
             RandomBrightnessContrast(brightness_limit=0.3, contrast_limit=0.3, p=1.0)
-        ], p=0.4)
+        ], p=0.4),
+        Resize(image_size[1], image_size[0]),
+        Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+        ToTensorV2()
     ])
 
-    val_augmentor = None  # 검증 augmentation 없음
+    test_augmentor = Compose([
+        PadIfNeeded(min_height=224, min_width=224, border_mode=cv2.BORDER_CONSTANT, value=(0, 0, 0)),
+        Resize(image_size[1], image_size[0]),
+        Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+        ToTensorV2()
+    ])
+
+    val_augmentor = Compose([
+    Resize(image_size[1], image_size[0]),
+    Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+    ToTensorV2()
+    ])
 
 config = Config() # 다른 파일에서 쉽게 쓰려고 미리 인스턴스 생성

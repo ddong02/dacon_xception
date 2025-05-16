@@ -46,6 +46,12 @@ class Plot_graph:
         plt.tight_layout()
         plt.pause(0.1)
 
+        save_name = os.path.join(
+        os.path.dirname(self.save_path),
+        f"epoch_{epoch+1:03d}.png"
+        )
+        self.fig.savefig(save_name)
+
     def save_and_close(self, interrupt=False):
         path = self.save_path.replace(".png", "_interrupt.png") if interrupt else self.save_path
         plt.ioff()
