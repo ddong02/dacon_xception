@@ -6,6 +6,28 @@ from albumentations import (
     PadIfNeeded, Resize, Normalize
 )
 from albumentations.pytorch.transforms import ToTensorV2
+from albumentations.core.transforms_interface import ImageOnlyTransform
+
+class PadSquare(ImageOnlyTransform):
+    def __init__(self, border_mode=0, value=0, always_apply=False, p=1.0):
+        super().__init__(always_apply, p)
+        self.border_mode = border_mode
+        self.value = value
+
+    def apply(self, image, **params):
+        h, w, c = image.shape
+        max_dim = max(h, w)
+        pad_h = max_dim - h
+        pad_w = max_dim - w
+        top = pad_h // 2
+        bottom = pad_h - top
+        left = pad_w // 2
+        right = pad_w - left
+        image = cv2.copyMakeBorder(image, top, bottom, left, right, cv2.BORDER_CONSTANT, value=self.value)
+        return image
+
+    def get_transform_init_args_names(self):
+        return ("border_mode", "value")
 
 class Config:
     # 데이터 경로
@@ -30,6 +52,8 @@ class Config:
 
     # Augmentation 설정
     train_augmentor = Compose([
+        PadSquare(value=(0, 0, 0)),
+        Resize(image_size[1], image_size[0]),
         HorizontalFlip(p=0.5),
         ShiftScaleRotate(shift_limit=(0.2, 0.1), scale_limit=(0.7, 1.0), rotate_limit=90, p=0.5),
         Blur(blur_limit=8, p=0.4),
@@ -38,13 +62,12 @@ class Config:
             ColorJitter(0.2, 0.2, 0.2, 0.2, p=1.0),
             RandomBrightnessContrast(brightness_limit=0.3, contrast_limit=0.3, p=1.0)
         ], p=0.4),
-        Resize(image_size[1], image_size[0]),
         Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
         ToTensorV2()
     ])
 
     test_augmentor = Compose([
-        PadIfNeeded(min_height=224, min_width=224, border_mode=cv2.BORDER_CONSTANT, value=(0, 0, 0)),
+        PadSquare(value=(0, 0, 0)),
         Resize(image_size[1], image_size[0]),
         Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
         ToTensorV2()
