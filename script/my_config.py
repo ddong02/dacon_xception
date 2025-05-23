@@ -1,4 +1,5 @@
-# config.py
+# my_config.py
+
 import cv2
 from albumentations import (
     Compose, HorizontalFlip, ShiftScaleRotate, Blur, CoarseDropout, 
@@ -45,7 +46,7 @@ class Config:
     n_epochs = 50
     learning_rate = 1e-4
     num_classes = 7
-    model_name = 'xception'  # 또는 'xception' (timm 필요)
+    model_name = 'xception'
 
     # 파일 저장
     model_save_path = '../output/best_model.pth'

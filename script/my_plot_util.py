@@ -1,4 +1,5 @@
-# my_plot.py
+# my_plot_util.py
+
 import matplotlib.pyplot as plt
 import os
 
