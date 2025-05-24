@@ -46,7 +46,7 @@ class Config:
     n_epochs = 50
     learning_rate = 1e-4
     num_classes = 7
-    model_name = 'xception'
+    model_name = 'xception65'
 
     # 파일 저장
     model_save_path = '../output/best_model.pth'
