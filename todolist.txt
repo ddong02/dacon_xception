@@ -1,14 +1,10 @@
-1. PadSquare::apply 이 함수 실제로 쓰이는지?
+1. Dacon 공유 코드에서 증식코드 부분, Dropout 사용 , 증식된 데이터 확인하는 코드 구현, schedule 부분
 
-2. Daon 공유 코드에서 증식코드 부분, Dropout 사용 , 증식된 데이터 확인하는 코드 구현, schedule 부분
+2. batch size 32->64, 시간 안 줄음
 
-3. batch size 32->64, 시간 안 줄음
+3. DataLoader 의 num_workers (와 CPU 코어 수의 관계)
 
-4. DataLoader 의 num_workers (와 CPU 코어 수의 관계)
-
-5. 윈도우에서 name == "main"
-
-3. Windows 환경에서는 종종 문제 발생
+. Windows 환경에서는 종종 문제 발생
 
 Windows에서는 multiprocessing이 spawn 방식이기 때문에,
 
@@ -23,3 +19,7 @@ num_workers > 0일 경우, worker 프로세스가 새로운 Python 프로세스�
 7. EDA
 
 8. early stop 기능 추가
+
+9. 클래스별 정확도 표시 기능
+
+10. 기존 6점 나왔던 코드와 80점 나왔던 코드의 차이는 무엇인지지

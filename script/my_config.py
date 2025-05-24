@@ -40,7 +40,7 @@ class Config:
     test_size = 0.25
     data_shuffle = True
     image_size = (224, 224)
-    batch_size = 64
+    batch_size = 32
 
     # 학습 설정
     n_epochs = 50
