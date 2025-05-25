@@ -1,25 +1,13 @@
 1. Dacon 공유 코드에서 증식코드 부분, Dropout 사용 , 증식된 데이터 확인하는 코드 구현, schedule 부분
 
-2. batch size 32->64, 시간 안 줄음
+2. 단유 선배 자료
 
-3. DataLoader 의 num_workers (와 CPU 코어 수의 관계)
+3. EDA
 
-. Windows 환경에서는 종종 문제 발생
+4. early stop 기능 추가
 
-Windows에서는 multiprocessing이 spawn 방식이기 때문에,
+5. 클래스별 정확도 표시 기능
 
-num_workers > 0일 경우, worker 프로세스가 새로운 Python 프로세스를 실행해야 하며
+6. 기존 6점 나왔던 코드와 80점 나왔던 코드의 차이는 무엇인지지
 
-코드가 if __name__ == '__main__': 안에 없으면 worker가 무한 재귀적으로 실행되면서 오류가 납니다.
-
-추론 코드에서 num_workers=0으로 설정하면 이런 문제를 방지할 수 있습니다.
-
-6. 단유 선배 자료
-
-7. EDA
-
-8. early stop 기능 추가
-
-9. 클래스별 정확도 표시 기능
-
-10. 기존 6점 나왔던 코드와 80점 나왔던 코드의 차이는 무엇인지지
+7. 
