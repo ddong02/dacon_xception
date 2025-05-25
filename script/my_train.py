@@ -59,7 +59,11 @@ def validate(model, dataloader, criterion, device):
     avg_loss = total_loss / len(dataloader.dataset)
     accuracy = correct / len(dataloader.dataset)
     f1 = f1_score(all_labels, all_preds, average='macro')
-    print(classification_report(all_labels, all_preds))
+
+    print()
+    print('-' * 60)
+    print(classification_report(all_labels, all_preds, zero_division=0))
+    print('-' * 60)
 
     return avg_loss, accuracy, f1
 

@@ -6,7 +6,6 @@ data/
 script/test.py
 output/*
 !output/
-!output/best_model.pth
 output/graphs/*
 !output/
 !output/graphs/
@@ -15,4 +14,3 @@ origin_script.py
 test.py
 temp/
 script/__pycache__/
-output/best_model.pth

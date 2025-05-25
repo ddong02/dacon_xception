@@ -32,6 +32,9 @@ def get_model(model_name='convnext_base', num_classes=7, pretrained=True):
     elif model_name == 'xception65':
         model = timm.create_model('xception65', pretrained=pretrained, num_classes=num_classes)
 
+    elif model_name == 'xception71':
+        model = timm.create_model('xception71', pretrained=pretrained, num_classes=num_classes)
+        
     else:
         raise ValueError(f"Model '{model_name}' is not supported.")
 
