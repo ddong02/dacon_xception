@@ -32,8 +32,8 @@ le = preprocessing.LabelEncoder()
 le.fit(train_df['label'])
 
 # 모델 로드
-model_path = config.model_save_path
-# model_path = 'D:\dh\Dacon\Xception\output\models\model_epoch20.pth'
+# model_path = config.model_save_path
+model_path = r"D:\dh\Dacon\Xception\output\models\model_epoch20.pth"
 
 model = get_model(config.model_name, num_classes=config.num_classes, pretrained=False)
 state_dict = torch.load(model_path, map_location=device)
