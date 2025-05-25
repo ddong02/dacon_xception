@@ -70,12 +70,6 @@ def main():
         print(f"\nTraining complete. Best model was from epoch {best_epoch} with acc {best_val_acc:.4f}")
         plotter.save_and_close()    # 저장 후 닫기
 
-        # --- 현재 내 폴더 구조에 맞게 test.csv img_path 컬럼 수정.
-        # dataset 과 겹치는지 아니면 필요한 부분인지 확인할 것
-        test_df = pd.read_csv('../data/test.csv')
-        test_image_root = os.path.join("..", "data", "test")  # → xception/data/test
-        test_df['img_path'] = test_df['img_path'].apply(lambda x: os.path.join(test_image_root, os.path.basename(x)))
-
         test_dataset = StoneDataset(test_df, image_size=config.image_size, transform=config.test_augmentor, is_test=True)
         test_loader = DataLoader(test_dataset, batch_size=config.batch_size, shuffle=False, num_workers=0)
 
