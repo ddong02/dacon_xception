@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 from sklearn.metrics import f1_score
+from sklearn.metrics import classification_report
 import os
 
 def train_one_epoch(model, dataloader, optimizer, criterion, device):
@@ -57,7 +58,8 @@ def validate(model, dataloader, criterion, device):
 
     avg_loss = total_loss / len(dataloader.dataset)
     accuracy = correct / len(dataloader.dataset)
-    f1 = f1_score(all_labels, all_preds, average='macro') 
+    f1 = f1_score(all_labels, all_preds, average='macro')
+    print(classification_report(all_labels, all_preds))
 
     return avg_loss, accuracy, f1
 
