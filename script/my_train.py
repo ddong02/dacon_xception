@@ -62,7 +62,16 @@ def validate(model, dataloader, criterion, device):
 
     print()
     print('-' * 60)
-    print(classification_report(all_labels, all_preds, zero_division=0))
+    print(classification_report(all_labels,
+                                 all_preds,
+                                 target_names=[ "Andesite",
+                                                "Basalt",
+                                                "Etc",
+                                                "Gneiss",
+                                                "Granite",
+                                                "Mud_Sandstone",
+                                                "Weathered_Rock" ],
+                                 zero_division=0))
     print('-' * 60)
 
     return avg_loss, accuracy, f1
