@@ -5,7 +5,6 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 from sklearn.metrics import f1_score
-from sklearn.metrics import classification_report
 import os
 
 def train_one_epoch(model, dataloader, optimizer, criterion, device):
@@ -60,21 +59,7 @@ def validate(model, dataloader, criterion, device):
     accuracy = correct / len(dataloader.dataset)
     f1 = f1_score(all_labels, all_preds, average='macro')
 
-    print()
-    print('-' * 60)
-    print(classification_report(all_labels,
-                                 all_preds,
-                                 target_names=[ "Andesite",
-                                                "Basalt",
-                                                "Etc",
-                                                "Gneiss",
-                                                "Granite",
-                                                "Mud_Sandstone",
-                                                "Weathered_Rock" ],
-                                 zero_division=0))
-    print('-' * 60)
-
-    return avg_loss, accuracy, f1
+    return avg_loss, accuracy, f1, all_labels, all_preds
 
 def save_checkpoint(model, path):
     os.makedirs(os.path.dirname(path), exist_ok=True)

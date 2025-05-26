@@ -9,7 +9,6 @@ output/*
 output/graphs/*
 !output/
 !output/graphs/
-!output/graphs/epoch_040.png
 origin_script.py
 test.py
 temp/

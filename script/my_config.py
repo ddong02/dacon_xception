@@ -39,14 +39,14 @@ class Config:
     # 데이터 설정
     test_size = 0.25
     data_shuffle = True
-    image_size = (299, 299)
-    batch_size = 16
+    image_size = (224, 224)
+    batch_size = 32
 
     # 학습 설정
     n_epochs = 50
     learning_rate = 1e-4
     num_classes = 7
-    model_name = 'xception71'
+    model_name = 'xception65'
 
     # 파일 저장
     model_save_path = '../output/best_model.pth'

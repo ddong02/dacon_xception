@@ -7,6 +7,7 @@ import os
 from torch.utils.data import DataLoader
 from sklearn import preprocessing
 from sklearn.utils.class_weight import compute_class_weight
+from sklearn.metrics import classification_report
 from my_dataset import load_dataframe, StoneDataset
 from my_config import config
 from my_model import get_model
@@ -66,10 +67,25 @@ def main():
 
             train_loss, train_acc = train_one_epoch(model, train_loader, optimizer, criterion, device)
             print(f"Train Loss: {train_loss:.4f} | Train Acc: {train_acc:.4f}")
+            print()
 
-            val_loss, val_acc, val_f1 = validate(model, val_loader, criterion, device)
+            val_loss, val_acc, val_f1, all_labels, all_preds = validate(model, val_loader, criterion, device)
             print(f"Val   Loss: {val_loss:.4f} | Val   Acc: {val_acc:.4f}")
             print(f">>> F1 score (macro) : {val_f1:.4f}")   # f1 score 출력
+
+            print()
+            print('-' * 60)
+            print(classification_report(all_labels,
+                                        all_preds,
+                                        target_names=[ "Andesite",
+                                                        "Basalt",
+                                                        "Etc",
+                                                        "Gneiss",
+                                                        "Granite",
+                                                        "Mud_Sandstone",
+                                                        "Weathered_Rock" ],
+                                        zero_division=0))
+            print('-' * 60)
 
             # plot 업데이트
             plotter.update(epoch, train_loss, val_loss, train_acc, val_acc)
