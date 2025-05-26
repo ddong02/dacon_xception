@@ -1,11 +1,5 @@
-1. Dacon 공유 코드에서 증식코드 부분, Dropout 사용 , 증식된 데이터 확인하는 코드 구현, schedule 부분
+1. main.py 에 test_df 수정한 뒤에 정상동작하는지 확인할 것 (Commit 030d90b)
 
-2. 단유 선배 자료
+2. tta 적용
 
-3. EDA
-
-4. early stop 기능 추가
-
-5. main.py 에 test_df 수정한 뒤에 정상동작하는지 확인할 것 (Commit 030d90b)
-
-6. 클래스 불균형 개선 기법 추가
+3. early stopping 과 lr scheduler 연동 (ReduceLROnPlateau)

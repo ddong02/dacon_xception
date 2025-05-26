@@ -2,15 +2,18 @@
 
 import torch
 import pandas as pd
+import numpy as np
 import os
 from torch.utils.data import DataLoader
 from sklearn import preprocessing
+from sklearn.utils.class_weight import compute_class_weight
 from my_dataset import load_dataframe, StoneDataset
 from my_config import config
 from my_model import get_model
 from my_train import train_one_epoch, validate, save_checkpoint
 from my_plot_util import Plot_graph
 from my_inference import inference
+from early_stopping import EarlyStopping # early stopping module
 
 def main():
     try:
@@ -34,15 +37,30 @@ def main():
         model = get_model(config.model_name, num_classes=config.num_classes, pretrained=True)
         model = model.to(device)
 
-        # 손실 함수와 옵티마이저
-        criterion = torch.nn.CrossEntropyLoss()
+        # class weight 적용 (5/26)
+        labels = train_df['label_idx'].values
+        class_labels = np.unique(labels)
+        class_weights = compute_class_weight(class_weight='balanced', classes=class_labels, y=labels)
+        class_weights_tensor = torch.tensor(class_weights, dtype=torch.float).to(device)
+
+        # 손실 함수와 옵티마이저 / 손실 함수에 class weights 추가
+        criterion = torch.nn.CrossEntropyLoss(weight=class_weights_tensor)
         optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
 
         plotter = Plot_graph(save_path="../output/graphs/output_graph.png")
 
         # 학습
         best_val_acc = 0.0
+        best_val_f1 = 0.0
         best_epoch = -1
+        best_f1_epoch = -1
+
+        # Initialize early stopping object (5/26)
+        early_stopping = EarlyStopping(patience=5,
+                                       verbose=True,
+                                       delta=1e-3,
+                                       path='../output/ealry_stopping_model.pth')
+
         for epoch in range(config.n_epochs):
             print(f"\nEpoch {epoch+1}/{config.n_epochs}")
 
@@ -67,7 +85,22 @@ def main():
                 save_checkpoint(model, config.model_save_path)
                 print(f"✅ Best model saved with acc {best_val_acc:.4f}")
 
+            if val_f1 > best_val_f1:
+                best_val_f1 = val_f1
+                best_f1_epoch = epoch + 1  # 1-based index
+
+            # val loss 를 확인해서 early stopping 여부를 결정 (5/26)
+            early_stopping(val_loss, model)
+            if early_stopping.early_stop:
+                print()
+                print('-' * 30)
+                print("Early stopping triggered")
+                print(f"Last epoch was {epoch+1}\n")
+                print('-' * 30)
+                break
+
         print(f"\nTraining complete. Best model was from epoch {best_epoch} with acc {best_val_acc:.4f}")
+        print(f"Best F1 score was {best_val_f1:.4f} at epoch {best_f1_epoch}")
         plotter.save_and_close()    # 저장 후 닫기
 
         test_dataset = StoneDataset(test_df, image_size=config.image_size, transform=config.test_augmentor, is_test=True)
