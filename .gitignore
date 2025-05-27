@@ -3,13 +3,10 @@
 data/sample_submission.csv
 data/test.csv
 data/
+
+script/__pycache__/
 script/test.py
+temp/
 output/*
 !output/
-output/graphs/*
-!output/
-!output/graphs/
-origin_script.py
-test.py
-temp/
-script/__pycache__/
+!output/graphs/output_graph.png

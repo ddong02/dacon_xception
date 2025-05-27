@@ -38,6 +38,7 @@ def main():
         model = get_model(config.model_name, num_classes=config.num_classes, pretrained=True)
         model = model.to(device)
 
+        ### Class Weights
         # class weight 적용 (5/26)
         labels = train_df['label_idx'].values
         class_labels = np.unique(labels)
@@ -63,18 +64,18 @@ def main():
                                        path='../output/ealry_stopping_model.pth')
 
         for epoch in range(config.n_epochs):
+            print()
+            print('-' * 60)
             print(f"\nEpoch {epoch+1}/{config.n_epochs}")
 
             train_loss, train_acc = train_one_epoch(model, train_loader, optimizer, criterion, device)
             print(f"Train Loss: {train_loss:.4f} | Train Acc: {train_acc:.4f}")
-            print()
 
             val_loss, val_acc, val_f1, all_labels, all_preds = validate(model, val_loader, criterion, device)
             print(f"Val   Loss: {val_loss:.4f} | Val   Acc: {val_acc:.4f}")
             print(f">>> F1 score (macro) : {val_f1:.4f}")   # f1 score 출력
 
             print()
-            print('-' * 60)
             print(classification_report(all_labels,
                                         all_preds,
                                         target_names=[ "Andesite",
@@ -85,7 +86,6 @@ def main():
                                                         "Mud_Sandstone",
                                                         "Weathered_Rock" ],
                                         zero_division=0))
-            print('-' * 60)
 
             # plot 업데이트
             plotter.update(epoch, train_loss, val_loss, train_acc, val_acc)
@@ -105,14 +105,13 @@ def main():
                 best_val_f1 = val_f1
                 best_f1_epoch = epoch + 1  # 1-based index
 
+            ### Early Stoppping
             # val loss 를 확인해서 early stopping 여부를 결정 (5/26)
             early_stopping(val_loss, model)
             if early_stopping.early_stop:
                 print()
-                print('-' * 30)
                 print("Early stopping triggered")
-                print(f"Last epoch was {epoch+1}\n")
-                print('-' * 30)
+                print(f"Last epoch was {epoch+1}")
                 break
 
         print(f"\nTraining complete. Best model was from epoch {best_epoch} with acc {best_val_acc:.4f}")
