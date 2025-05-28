@@ -10,3 +10,4 @@ temp/
 output/*
 !output/
 !output/graphs/output_graph.png
+test.py

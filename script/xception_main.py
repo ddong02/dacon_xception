@@ -9,7 +9,7 @@ from sklearn import preprocessing
 from sklearn.utils.class_weight import compute_class_weight
 from sklearn.metrics import classification_report
 from my_dataset import load_dataframe, StoneDataset
-from my_config import config
+from my_config import config, seed_everything
 from my_model import get_model
 from my_train import train_one_epoch, validate, save_checkpoint
 from my_plot_util import Plot_graph
@@ -18,6 +18,9 @@ from early_stopping import EarlyStopping # early stopping module
 
 def main():
     try:
+        # seed 고정
+        seed_everything(config.seed)
+
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         print(f"Using device: {device}")
 

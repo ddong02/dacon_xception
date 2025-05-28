@@ -1,6 +1,10 @@
 # my_config.py
 
 import cv2
+import random
+import os
+import torch
+import numpy as np
 from albumentations import (
     Compose, HorizontalFlip, ShiftScaleRotate, Blur, CoarseDropout, 
     RandomRain, CLAHE, ColorJitter, RandomBrightnessContrast, OneOf,
@@ -30,6 +34,16 @@ class PadSquare(ImageOnlyTransform):
     def get_transform_init_args_names(self):
         return ("border_mode", "value")
 
+# seed 고정하는 함수
+def seed_everything(seed):
+    random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = True
+
 class Config:
     # 데이터 경로
     train_dir = '../data/train'
@@ -47,6 +61,7 @@ class Config:
     learning_rate = 1e-4
     num_classes = 7
     model_name = 'xception65'
+    seed = 41
 
     # 파일 저장
     model_save_path = '../output/best_model.pth'
