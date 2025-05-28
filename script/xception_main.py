@@ -58,7 +58,7 @@ def main():
             patience=3,            # 5번 연속 성능 개선 없으면 LR 감소
             threshold=1e-3,        # 0.001보다 작게 개선되면 "개선 아님"
             threshold_mode='rel',  # 상대적 기준
-            verbose=True,
+            # verbose=True, # Error 발생 -> 비활성화
             cooldown=0,
             min_lr=1e-6
         )
@@ -72,9 +72,9 @@ def main():
         best_f1_epoch = -1
 
         # Initialize early stopping object (5/26)
-        early_stopping = EarlyStopping(patience=50,
+        early_stopping = EarlyStopping(patience=10,
                                        verbose=True,
-                                       delta=0,
+                                       delta=1e-3,
                                        path='../output/ealry_stopping_model.pth')
 
         for epoch in range(config.n_epochs):
