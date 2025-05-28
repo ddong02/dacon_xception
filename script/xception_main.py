@@ -49,6 +49,20 @@ def main():
         criterion = torch.nn.CrossEntropyLoss(weight=class_weights_tensor)
         optimizer = torch.optim.Adam(model.parameters(), lr=config.learning_rate)
 
+
+        # scheduler (5/28)
+        scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+            optimizer,
+            mode='min',
+            factor=0.5,
+            patience=3,            # 5번 연속 성능 개선 없으면 LR 감소
+            threshold=1e-3,        # 0.001보다 작게 개선되면 "개선 아님"
+            threshold_mode='rel',  # 상대적 기준
+            verbose=True,
+            cooldown=0,
+            min_lr=1e-6
+        )
+
         plotter = Plot_graph(save_path="../output/graphs/output_graph.png")
 
         # 학습
@@ -104,6 +118,9 @@ def main():
             if val_f1 > best_val_f1:
                 best_val_f1 = val_f1
                 best_f1_epoch = epoch + 1  # 1-based index
+
+            # scheduler (5/28)
+            scheduler.step(val_loss)
 
             ### Early Stoppping
             # val loss 를 확인해서 early stopping 여부를 결정 (5/26)
