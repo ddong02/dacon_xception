@@ -91,7 +91,7 @@ def main():
                                         zero_division=0))
             print('-' * 60)            
 
-            plotter.update(epoch, train_loss, val_loss, train_acc, val_acc)
+            plotter.update(epoch, train_loss, val_loss, train_acc, val_acc, val_f1)
 
             # 각 에폭마다 모델 저장
             epoch_save_path = f"../output/models/model_epoch{epoch+1:02d}.pth"

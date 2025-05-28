@@ -40,7 +40,7 @@ class Plot_graph:
         self.axes[1].clear()
         self.axes[1].plot(epochs, self.train_accuracies, label="Train Accuracy", marker="o")
         self.axes[1].plot(epochs, self.val_accuracies, label="Val Accuracy", marker="o")
-        self.axes[1].plot(epochs, self.val_f1s, label="Val F1 Score", marker="s", linestyle="--")
+        self.axes[1].plot(epochs, self.val_f1_scores, label="Val F1 Score", marker="s", linestyle="--")
         self.axes[1].set_title("Accuracy and F1-score")
         self.axes[1].set_xlabel("Epoch")
         self.axes[1].set_ylabel("Accuracy & F1-score")
