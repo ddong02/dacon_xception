@@ -13,14 +13,16 @@ class Plot_graph:
         self.val_losses = []
         self.train_accuracies = []
         self.val_accuracies = []
+        self.val_f1_scores = []
 
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
 
-    def update(self, epoch, train_loss, val_loss, train_acc, val_acc):
+    def update(self, epoch, train_loss, val_loss, train_acc, val_acc, val_f1):
         self.train_losses.append(train_loss)
         self.val_losses.append(val_loss)
         self.train_accuracies.append(train_acc)
         self.val_accuracies.append(val_acc)
+        self.val_f1_scores.append(val_f1)
 
         epochs = range(1, epoch + 2)
 
@@ -38,9 +40,10 @@ class Plot_graph:
         self.axes[1].clear()
         self.axes[1].plot(epochs, self.train_accuracies, label="Train Accuracy", marker="o")
         self.axes[1].plot(epochs, self.val_accuracies, label="Val Accuracy", marker="o")
-        self.axes[1].set_title("Accuracy")
+        self.axes[1].plot(epochs, self.val_f1s, label="Val F1 Score", marker="s", linestyle="--")
+        self.axes[1].set_title("Accuracy and F1-score")
         self.axes[1].set_xlabel("Epoch")
-        self.axes[1].set_ylabel("Accuracy")
+        self.axes[1].set_ylabel("Accuracy & F1-score")
         self.axes[1].legend()
         self.axes[1].grid(True)
 
