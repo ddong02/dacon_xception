@@ -58,9 +58,9 @@ def main():
         best_f1_epoch = -1
 
         # Initialize early stopping object (5/26)
-        early_stopping = EarlyStopping(patience=5,
+        early_stopping = EarlyStopping(patience=50,
                                        verbose=True,
-                                       delta=1e-3,
+                                       delta=0,
                                        path='../output/ealry_stopping_model.pth')
 
         for epoch in range(config.n_epochs):

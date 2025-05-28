@@ -1,5 +1,5 @@
-1. main.py 에 test_df 수정한 뒤에 정상동작하는지 확인할 것 (Commit 030d90b)
+1. tta 적용
 
-2. tta 적용
+2. early stopping 과 lr scheduler 연동 (ReduceLROnPlateau)
 
-3. early stopping 과 lr scheduler 연동 (ReduceLROnPlateau)
+3. 
