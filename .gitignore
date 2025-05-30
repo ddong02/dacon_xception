@@ -11,3 +11,7 @@ output/*
 !output/
 !output/graphs/output_graph.png
 test.py
+bestscore_model_epoch20.pth
+convnextv2_best_model.pth
+resnet101_model_epoch_50.pth
+xception65_model_epoch20.pth
