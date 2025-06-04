@@ -177,7 +177,7 @@ class StoneDataset(Dataset):
 
 ---
 
-### inference.py
+### `inference.py`
 
 ```python
 # my_inference
@@ -400,7 +400,7 @@ def save_checkpoint(model, path):
 
 ---
 
-### main.py
+### `main.py`
 
 ```python
 # main.py
@@ -511,7 +511,7 @@ if __name__ == "__main__":
 
 ---
 
-### ensemble.py
+### `ensemble.py`
 
 ```python
 import os
