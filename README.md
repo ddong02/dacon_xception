@@ -4,6 +4,18 @@
 
 **사용 모델: xception65**
 
+| 항목               | `xception65`         | `xception71`         | `legacy_xception`       |
+| ---------------- | -------------------- | -------------------- | ----------------------- |
+| 파라미터 수           | 약 **25.8M**          | 약 **43.0M**          | 약 **22.9M**             |
+| FLOPs            | 약 **8.4 GFLOPs**     | 약 **16.4 GFLOPs**    | 약 **8.4 GFLOPs** (비슷)   |
+| 입력 해상도           | **299×299**          | **299×299**          | **299×299**             |
+| Top-1 정확도 (IN1K) | **79.5\~80.6%**      | **80.5\~81.4%**      | **78.9%**               |
+| 사전학습 지원          | `pretrained=True` 가능 | `pretrained=True` 가능 | `pretrained=True` 가능    |
+| `timm` 모델명       | `xception65`       | `xception71`       | `legacy_xception`     |
+| 특징/용도            | DeepLab 등에서 사용, 균형   | 높은 정확도, 더 깊고 크다      | 가장 오래된 버전 (Keras 등과 유사) |
+
+FLOPs는 "Floating Point Operations", 부동소수점 연산 횟수
+
 ## 기본 코드
 
 **특이사항**
